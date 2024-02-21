@@ -21,6 +21,7 @@ export const colors = {
   // Colors
   light_gray: "#F6F6F6",
   gray: "#E8E8E8",
+  dark_gray: "#BDBDBD",
   danger: "#FF4545",
   success: "#007026",
   orange: "#FF8A00",
