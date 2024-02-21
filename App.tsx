@@ -1,18 +1,21 @@
 import React from "react";
 import { StatusBar } from "react-native";
 
-import Signin from "./src/Screens/SignIn";
-
 import { ThemeProvider } from "@shopify/restyle";
 import { theme } from "./src/theme";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import Routes from "./src/routes";
 
-function App(): React.JSX.Element {
+const Stack = createNativeStackNavigator();
+
+export default function App() {
   return (
-    <ThemeProvider theme={theme}>
-      <Signin />
-      <StatusBar barStyle="dark-content" backgroundColor="transparent" translucent />
-    </ThemeProvider>
+    <NavigationContainer>
+      <ThemeProvider theme={theme}>
+        <StatusBar barStyle="dark-content" backgroundColor="#FFF" translucent />
+        <Routes />
+      </ThemeProvider>
+    </NavigationContainer>
   );
 }
-
-export default App;
