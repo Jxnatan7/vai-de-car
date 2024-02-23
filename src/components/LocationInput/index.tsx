@@ -1,9 +1,13 @@
+import React from "react";
 import { useTheme } from "@shopify/restyle";
-import { ThemeProps } from "../../theme";
 import { TextInput } from "react-native";
-import { InputProps } from "../../@types/InputProps";
+import { ThemeProps } from "../../theme";
 
-export function Input({ placeholder }: InputProps) {
+type LocationInputProps = {
+  placeholder: string;
+};
+
+export function LocationInput({ placeholder }: LocationInputProps) {
   const theme = useTheme<ThemeProps>();
   return (
     <TextInput
@@ -15,9 +19,8 @@ export function Input({ placeholder }: InputProps) {
         backgroundColor: theme.colors.light_gray,
         borderWidth: 1,
         borderColor: theme.colors.gray,
-        borderRadius: 8,
-        padding: theme.spacing.s,
-        marginBottom: theme.spacing.l,
+        borderRadius: 10,
+        paddingHorizontal: theme.spacing.l,
         fontSize: 16,
         color: theme.colors.text_dark,
       }}
