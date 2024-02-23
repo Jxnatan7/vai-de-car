@@ -1,16 +1,19 @@
-import { createTheme } from "@shopify/restyle";
+import {createBox, createText, createTheme} from "@shopify/restyle";
 
-import { colors } from "./colors";
-import { spacing } from "./spacing";
-import { textVariants } from "./textVariants";
+import {colors} from "./colors";
+import {spacing} from "./spacing";
+import {textVariants} from "./textVariants";
 
 const theme = createTheme({
   colors,
   spacing,
-  textVariants
+  textVariants,
 });
 
 type ThemeProps = typeof theme;
 
-export { theme }; export type { ThemeProps };
+const Box = createBox<ThemeProps>();
+const Text = createText<ThemeProps>();
 
+export {theme, Box, Text};
+export type {ThemeProps};

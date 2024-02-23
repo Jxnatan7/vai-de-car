@@ -1,25 +1,18 @@
-import { ReactNode } from "react";
+import {Box, Text} from "../../theme";
+import {BackButton} from "../BackButton";
+import {HeaderProps} from "../../@types/HeaderProps";
 
-import { createBox, createText } from "@shopify/restyle";
-import { ThemeProps } from "../../theme";
-
-const Box = createBox<ThemeProps>();
-const Text = createText<ThemeProps>();
-
-type HeaderProps = {
-    title: string,
-    leftAction?: ReactNode,
-    rightAction?: ReactNode
-};
-
-export function Header({ title, leftAction, rightAction }: HeaderProps) {
-    return (
-        <Box width="100%" flexDirection="row" alignItems="center" justifyContent="space-between" mb="xl">
-            {leftAction ?? <Box />}
-            <Text variant="header">
-                {title}
-            </Text>
-            {rightAction ?? <Box />}
-        </Box>
-    );
+export function Header({title, backButton, navigation}: HeaderProps) {
+  return (
+    <Box
+      width="100%"
+      flexDirection="row"
+      alignItems="center"
+      justifyContent="space-between"
+      mb="xl">
+      {(backButton && <BackButton navigation={navigation} />) ?? <Box />}
+      <Text variant="header">{title}</Text>
+      <Box />
+    </Box>
+  );
 }

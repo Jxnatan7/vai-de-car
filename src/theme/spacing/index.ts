@@ -3,7 +3,7 @@ const spacing = {
   m: 16,
   l: 24,
   xl: 40,
-  xxl: 60
+  xxl: 60,
 };
 
-export { spacing };
+export {spacing};
