@@ -1,3 +1,4 @@
+import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { MapContainer } from "../MapContainer";
 import { LayoutPropsProps } from "../../@types/LayoutProps";
@@ -13,7 +14,9 @@ export function Layout({
   return (
     <SafeAreaView>
       {isMap ? (
-        <MapContainer />
+        <MapContainer navigation={navigation}>
+          {children}
+        </MapContainer>
       ) : (
         <BoxContainer headerTitle={headerTitle} navigation={navigation} backButton={backButton}>
           {children}
