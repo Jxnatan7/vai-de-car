@@ -1,13 +1,25 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Box } from "../../theme";
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import { BottomSheet } from "../BottomSheet";
 import { BackButton } from "../BackButton";
 import { MapContainerProps } from "../../@types/MapContainerProps";
+import Geolocation, { GeolocationResponse } from '@react-native-community/geolocation';
 
 export function MapContainer({ navigation, children }: MapContainerProps) {
-  const latitude = -27.517353999320548;
-  const longitude = -48.656403094377346;
+  const [location, setLocation] = useState<GeolocationResponse>();
+  console.log(location?.coords);
+
+  useEffect(() => {
+    Geolocation.getCurrentPosition(
+      position => {
+        const location = position;
+        setLocation(location);
+      },
+      error => console.log(error),
+      { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
+    );
+  }, []);
 
   return (
     <Box
@@ -21,27 +33,31 @@ export function MapContainer({ navigation, children }: MapContainerProps) {
           <BackButton navigation={navigation} />
         </Box>
       </Box>
-      <MapView
-        provider={PROVIDER_GOOGLE}
-        style={{
-          flex: 1,
-          position: "absolute",
-          width: "100%",
-          height: "100%",
-        }}
-        initialRegion={{
-          latitude,
-          longitude,
-          latitudeDelta: 0.003,
-          longitudeDelta: 0.003,
-        }}>
-        <Marker
-          coordinate={{
-            latitude,
-            longitude,
-          }}
-        />
-      </MapView>
+      {
+        location && (
+          <MapView
+            provider={PROVIDER_GOOGLE}
+            style={{
+              flex: 1,
+              position: "absolute",
+              width: "100%",
+              height: "100%",
+            }}
+            initialRegion={{
+              latitude: location.coords.latitude,
+              longitude: location.coords.longitude,
+              latitudeDelta: 0.003,
+              longitudeDelta: 0.003,
+            }}>
+            <Marker
+              coordinate={{
+                latitude: location.coords.latitude,
+                longitude: location.coords.longitude,
+              }}
+            />
+          </MapView>
+        )
+      }
       <BottomSheet>
         {children}
       </BottomSheet>

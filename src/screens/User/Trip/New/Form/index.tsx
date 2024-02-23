@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Box, Text } from "../../../../../theme";
+import { useState } from "react";
+import { Box } from "../../../../../theme";
 import { ScrollView } from "react-native";
 import { LocationInput } from "../../../../../components/LocationInput";
 import { TextInfo } from "../../../../../components/TextInfo";
