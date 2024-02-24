@@ -1,7 +1,5 @@
-import { ReactNode } from "react";
-import { NavigationProps } from "./NavigationProps";
+import { ReactElement } from "react";
 
 export type MapContainerProps = {
-    navigation: NavigationProps,
-    children: ReactNode
+    children: ReactElement
 };

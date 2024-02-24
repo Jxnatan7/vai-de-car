@@ -59,7 +59,7 @@ export function BottomSheet({ children }: BottomSheetProps) {
             <Animated.View style={[{
                 backgroundColor: theme.colors.bg_light,
                 borderRadius: 25,
-                width: "99%",
+                width: "100%",
                 height: SCREEN_HEIGHT,
                 top: SCREEN_HEIGHT,
                 borderWidth: 1,

@@ -7,18 +7,17 @@ import BoxContainer from "../BoxContainer";
 export function Layout({
   children,
   headerTitle,
-  navigation,
   backButton,
   isMap,
 }: LayoutPropsProps) {
   return (
     <SafeAreaView>
       {isMap ? (
-        <MapContainer navigation={navigation}>
+        <MapContainer>
           {children}
         </MapContainer>
       ) : (
-        <BoxContainer headerTitle={headerTitle} navigation={navigation} backButton={backButton}>
+        <BoxContainer headerTitle={headerTitle} backButton={backButton}>
           {children}
         </BoxContainer>
       )}

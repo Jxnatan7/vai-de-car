@@ -1,34 +1,60 @@
 import React from "react";
 import { useState } from "react";
 import { Box } from "../../../../../theme";
-import { ScrollView } from "react-native";
 import { LocationInput } from "../../../../../components/LocationInput";
 import { TextInfo } from "../../../../../components/TextInfo";
 import { InputRadio } from "../../../../../components/InputRadio";
 import { MainButton } from "../../../../../components/MainButton";
+import { ScrollView } from "react-native-gesture-handler";
+import { NewTripFormProps } from "../../../../../@types/NewTripFormProps";
 
-export function NewTripForm() {
+export function NewTripForm({ fetchLocationData }: NewTripFormProps) {
 
     const [selectedOption, setSelectedOption] = useState<number | null>(null);
 
+    const [state, setState] = useState({
+        pickupCords: {},
+        destinationCords: {}
+    });
+
+    const onDone = () => {
+        fetchLocationData(state);
+    };
+
+    const fetchAddressCords = (latitude: number, longitude: number) => {
+        setState({
+            ...state,
+            pickupCords: {
+                latitude,
+                longitude
+            }
+        });
+    };
+
+    const fetchDestinationCords = (latitude: number, longitude: number) => {
+        setState({
+            ...state,
+            destinationCords: {
+                latitude,
+                longitude
+            }
+        });
+    };
+
     return (
-        <ScrollView style={{ width: "100%" }}>
-            <Box alignItems="center" gap="m" mt="m">
-                <LocationInput placeholder="Onde você está?" />
-                <LocationInput placeholder="Para onde você quer ir?" />
-            </Box>
-            <TextInfo text="Prefere viajar de carro ou de moto?" />
-            <InputRadio
-                label="Carro - Até quatro pessoas"
-                selected={selectedOption === 0}
-                onSelect={() => setSelectedOption(0)}
-            />
-            <InputRadio
-                label="Moto - Até uma pessoa"
-                selected={selectedOption === 1}
-                onSelect={() => setSelectedOption(1)}
-            />
-            <MainButton action={() => ""} bg="btn_dark" color="text_light" text="Buscar viagem" marginTop="xl" />
-        </ScrollView>
+        <Box width="100%" height="100%" justifyContent="space-around">
+            <ScrollView keyboardShouldPersistTaps="handled" style={{ width: "100%", flex: 1, height: 300 }} contentContainerStyle={{ alignItems: "center" }}>
+                <LocationInput
+                    fetchAddress={fetchAddressCords}
+                    placeholder="Onde você está?"
+                />
+                <Box mb="m" />
+                <LocationInput
+                    fetchAddress={fetchDestinationCords}
+                    placeholder="Para onde você quer ir?"
+                />
+                <MainButton action={() => onDone()} bg="btn_dark" color="text_light" text="Buscar viagem" marginTop="exaggerated" />
+            </ScrollView>
+        </Box>
     );
 }

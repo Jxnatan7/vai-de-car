@@ -1,15 +1,14 @@
 import React from "react";
 
-import { ScrollView } from "react-native";
 import { Layout } from "../../../../components/Layout";
-import { NewTripProps } from "../../../../@types/NewTripProps";
-import { Box } from "../../../../theme";
 import { NewTripForm } from "./Form";
 
-export default function NewTrip({ navigation }: NewTripProps) {
+export default function NewTrip() {
   return (
-    <Layout backButton isMap navigation={navigation}>
-      <NewTripForm />
+    <Layout backButton isMap>
+      <NewTripForm fetchLocationData={function (): void {
+        throw new Error("Function not implemented.");
+      }} />
     </Layout>
   );
 }

@@ -1,8 +1,9 @@
-import {Box, Text} from "../../theme";
-import {BackButton} from "../BackButton";
-import {HeaderProps} from "../../@types/HeaderProps";
+import React from "react";
+import { Box, Text } from "../../theme";
+import { BackButton } from "../BackButton";
+import { HeaderProps } from "../../@types/HeaderProps";
 
-export function Header({title, backButton, navigation}: HeaderProps) {
+export function Header({ title, backButton }: HeaderProps) {
   return (
     <Box
       width="100%"
@@ -10,7 +11,7 @@ export function Header({title, backButton, navigation}: HeaderProps) {
       alignItems="center"
       justifyContent="space-between"
       mb="xl">
-      {(backButton && <BackButton navigation={navigation} />) ?? <Box />}
+      {(backButton && <BackButton />) ?? <Box />}
       <Text variant="header">{title}</Text>
       <Box />
     </Box>

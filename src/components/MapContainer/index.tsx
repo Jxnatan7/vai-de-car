@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Box } from "../../theme";
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import { BottomSheet } from "../BottomSheet";
 import { BackButton } from "../BackButton";
 import { MapContainerProps } from "../../@types/MapContainerProps";
 import Geolocation, { GeolocationResponse } from '@react-native-community/geolocation';
+import { fetchLocationDataProps } from "../../@types/NewTripFormProps";
 
-export function MapContainer({ navigation, children }: MapContainerProps) {
+export function MapContainer({ children }: MapContainerProps) {
+
   const [location, setLocation] = useState<GeolocationResponse>();
 
   useEffect(() => {
@@ -20,6 +22,41 @@ export function MapContainer({ navigation, children }: MapContainerProps) {
     );
   }, []);
 
+  const [state, setState] = useState({
+    startingCords: {
+      latitude: 0,
+      longitude: 0,
+    },
+    destinationCords: {
+      latitude: 0,
+      longitude: 0,
+    }
+  });
+
+  useEffect(() => {
+    if (location) {
+      setState({
+        startingCords: {
+          latitude: location.coords.latitude,
+          longitude: location.coords.longitude,
+        },
+        destinationCords: {
+          latitude: location.coords.latitude,
+          longitude: location.coords.longitude,
+        }
+      });
+    }
+  }, [location]);
+
+  const { startingCords } = state;
+
+  const fetchLocationData = (data: fetchLocationDataProps) => {
+    setState({
+      startingCords: data.pickupCords,
+      destinationCords: data.destinationCords
+    });
+  };
+
   return (
     <Box
       width="100%"
@@ -29,7 +66,7 @@ export function MapContainer({ navigation, children }: MapContainerProps) {
     >
       <Box width={50} height={50} position="absolute" top={0} left={0} zIndex={9999} p="s">
         <Box width="100%" height="100%" bg="bg_light" borderRadius={50} justifyContent="center" alignItems="center">
-          <BackButton navigation={navigation} />
+          <BackButton />
         </Box>
       </Box>
       {
@@ -42,23 +79,24 @@ export function MapContainer({ navigation, children }: MapContainerProps) {
               width: "100%",
               height: "100%",
             }}
-            initialRegion={{
-              latitude: location.coords.latitude,
-              longitude: location.coords.longitude,
+            region={{
+              latitude: startingCords.latitude,
+              longitude: startingCords.longitude,
               latitudeDelta: 0.003,
               longitudeDelta: 0.003,
-            }}>
+            }}
+          >
             <Marker
               coordinate={{
-                latitude: location.coords.latitude,
-                longitude: location.coords.longitude,
+                latitude: startingCords.latitude,
+                longitude: startingCords.longitude,
               }}
             />
           </MapView>
         )
       }
       <BottomSheet>
-        {children}
+        {React.cloneElement(children, { fetchLocationData: fetchLocationData })}
       </BottomSheet>
     </Box>
   );

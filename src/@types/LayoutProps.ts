@@ -1,10 +1,8 @@
-import {ReactNode} from "react";
-import {NavigationProps} from "./NavigationProps";
+import { ReactElement } from "react";
 
 export type LayoutPropsProps = {
-  children: ReactNode;
+  children: ReactElement;
   headerTitle?: string;
-  navigation: NavigationProps;
   backButton?: boolean;
   isMap?: boolean;
 };

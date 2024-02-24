@@ -4,7 +4,7 @@ const spacing = {
   l: 24,
   xl: 40,
   xxl: 60,
-  auto: "auto"
+  exaggerated: 200
 };
 
 export { spacing };

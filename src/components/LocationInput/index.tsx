@@ -1,29 +1,63 @@
 import React from "react";
 import { useTheme } from "@shopify/restyle";
-import { TextInput } from "react-native";
 import { ThemeProps } from "../../theme";
+import { GooglePlacesAutocomplete, GooglePlaceData, GooglePlaceDetail } from "react-native-google-places-autocomplete";
+import { google_api_key } from "../../config/index.json";
+import { LocationInputProps } from "../../@types/LocationInputProps";
 
-type LocationInputProps = {
-  placeholder: string;
-};
-
-export function LocationInput({ placeholder }: LocationInputProps) {
+export function LocationInput({ placeholder, fetchAddress }: LocationInputProps) {
   const theme = useTheme<ThemeProps>();
+  const onPressAddress = (data: GooglePlaceData | null, details: GooglePlaceDetail | null) => {
+    const latitude = details?.geometry.location.lat;
+    const longitude = details?.geometry.location.lng;
+    fetchAddress(latitude, longitude);
+  };
   return (
-    <TextInput
+    <GooglePlacesAutocomplete
       placeholder={placeholder}
-      placeholderTextColor={theme.colors.text_gray}
-      style={{
-        width: "100%",
-        height: 50,
-        backgroundColor: theme.colors.light_gray,
-        borderWidth: 1,
-        borderColor: theme.colors.gray,
-        borderRadius: 10,
-        paddingHorizontal: theme.spacing.l,
-        fontSize: 16,
-        color: theme.colors.text_dark,
+      onPress={onPressAddress}
+      fetchDetails={true}
+      query={{
+        key: google_api_key,
+        language: 'pt-BR',
+      }}
+      styles={{
+        container: {
+          width: '100%',
+        },
+        textInputContainer: {
+          backgroundColor: theme.colors.light_gray,
+          borderWidth: 1,
+          borderColor: theme.colors.gray,
+          borderRadius: 10,
+          paddingHorizontal: theme.spacing.s,
+        },
+        textInput: {
+          height: 50,
+          fontSize: 16,
+          backgroundColor: theme.colors.light_gray,
+          color: theme.colors.text_dark,
+        },
+        predefinedPlacesDescription: {
+          color: '#1faadb',
+        },
       }}
     />
   );
 }
+
+// <TextInput
+//   placeholder={placeholder}
+//   placeholderTextColor={theme.colors.text_gray}
+//   style={{
+//     width: "100%",
+//     height: 50,
+//     backgroundColor: theme.colors.light_gray,
+//     borderWidth: 1,
+//     borderColor: theme.colors.gray,
+//     borderRadius: 10,
+//     paddingHorizontal: theme.spacing.l,
+//     fontSize: 16,
+//     color: theme.colors.text_dark,
+//   }}
+// />
