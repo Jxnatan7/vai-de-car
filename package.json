@@ -21,6 +21,7 @@
     "@react-navigation/native-stack": "^6.9.18",
     "@shopify/restyle": "^2.4.2",
     "react": "18.2.0",
+    "react-hook-form": "^7.50.1",
     "react-native": "0.73.4",
     "react-native-gesture-handler": "^2.15.0",
     "react-native-maps": "^1.10.3",

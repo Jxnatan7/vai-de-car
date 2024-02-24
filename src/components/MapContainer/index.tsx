@@ -8,7 +8,6 @@ import Geolocation, { GeolocationResponse } from '@react-native-community/geoloc
 
 export function MapContainer({ navigation, children }: MapContainerProps) {
   const [location, setLocation] = useState<GeolocationResponse>();
-  console.log(location?.coords);
 
   useEffect(() => {
     Geolocation.getCurrentPosition(

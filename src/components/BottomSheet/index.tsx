@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect } from "react";
-import { Dimensions } from "react-native";
+import { Dimensions, TouchableOpacity } from "react-native";
 import { Box, ThemeProps } from "../../theme";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import Animated, { Extrapolation, interpolate, useAnimatedStyle, useSharedValue, withSpring } from "react-native-reanimated";
@@ -30,7 +30,7 @@ export function BottomSheet({ children }: BottomSheetProps) {
     }).onEnd(() => {
         if (translateY.value > -SCREEN_HEIGHT / 3) {
             scrollTo(-190);
-        } else if (translateY.value < -SCREEN_HEIGHT / 2) {
+        } else if (translateY.value < -SCREEN_HEIGHT / 2.99) {
             scrollTo(MAX_TRANSLATE_Y);
         }
     });
@@ -66,14 +66,16 @@ export function BottomSheet({ children }: BottomSheetProps) {
                 borderColor: theme.colors.dark_gray,
                 paddingHorizontal: theme.spacing.l
             }, BottomSheetStyle]}>
-                <Box
-                    width={75}
-                    height={4}
-                    bg="dark_gray"
-                    alignSelf="center"
-                    marginVertical="m"
-                    borderRadius={2}
-                />
+                <TouchableOpacity activeOpacity={0.7} onPress={() => scrollTo(translateY.value === MAX_TRANSLATE_Y ? -190 : MAX_TRANSLATE_Y)}>
+                    <Box
+                        width={75}
+                        height={4}
+                        bg="dark_gray"
+                        alignSelf="center"
+                        marginVertical="m"
+                        borderRadius={2}
+                    />
+                </TouchableOpacity>
                 {children}
             </Animated.View>
         </GestureDetector>
