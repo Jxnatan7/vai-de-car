@@ -11,6 +11,8 @@ import { InputRadio } from "../../../../../components/InputRadio";
 import { MainButton } from "../../../../../components/MainButton";
 import { useNavigation } from "@react-navigation/native";
 import { useForm } from "react-hook-form";
+import api, { configureAxios } from '../../../../../config/axiosConfig';
+import { storage } from "../../../../../config/storage";
 
 const InfoTitle = ({ text }: { text: string }) => {
   return <Text color="very_dark_gray">{text}</Text>;
@@ -24,8 +26,9 @@ type FormData = {
   price: number;
 }
 
-export default function ConfirmTrip({ route }) {
+configureAxios(storage.getString("user.token"));
 
+export default function ConfirmTrip({ route }) {
   const navigation = useNavigation();
   const [selectedOption, setSelectedOption] = useState<string | null>("TRIP_CAR");
 
@@ -59,7 +62,16 @@ export default function ConfirmTrip({ route }) {
     }
   });
 
-  const onSubmit = (data) => console.log(data)
+  const onSubmit = (data: FormData) => {
+    api.post('/trip', data)
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+
   return (
     <Layout backButton headerTitle="Confirme a viagem">
       <Box width="100%" height="100%">
