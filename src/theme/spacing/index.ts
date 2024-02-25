@@ -4,7 +4,7 @@ const spacing = {
   l: 24,
   xl: 40,
   xxl: 60,
-  exaggerated: 200
+  exaggerated: 200,
 };
 
-export { spacing };
+export {spacing};

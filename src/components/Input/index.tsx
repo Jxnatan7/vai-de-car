@@ -1,9 +1,9 @@
-import { useTheme } from "@shopify/restyle";
-import { ThemeProps } from "../../theme";
-import { TextInput } from "react-native";
-import { InputProps } from "../../@types/InputProps";
+import {useTheme} from "@shopify/restyle";
+import {ThemeProps} from "../../theme";
+import {TextInput} from "react-native";
+import {InputProps} from "../../@types/InputProps";
 
-export function Input({ placeholder }: InputProps) {
+export function Input({placeholder}: InputProps) {
   const theme = useTheme<ThemeProps>();
   return (
     <TextInput

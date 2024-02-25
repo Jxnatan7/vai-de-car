@@ -6,6 +6,8 @@ import UserSignUp from "../screens/User/SignUp";
 import DriverSignUp from "../screens/Driver/SignUp";
 import AutomobileRegister from "../screens/Driver/Automobile/Register";
 import NewTrip from "../screens/User/Trip/New";
+import ConfirmTrip from "../screens/User/Trip/New/Confirm";
+import Trip from "../screens/User/Trip";
 
 const Stack = createNativeStackNavigator();
 
@@ -41,6 +43,16 @@ export default function Routes() {
         options={{headerShown: false}}
         name="new-trip"
         component={NewTrip}
+      />
+      <Stack.Screen
+        options={{headerShown: false}}
+        name="confirm-trip"
+        component={ConfirmTrip}
+      />
+      <Stack.Screen
+        options={{headerShown: false}}
+        name="trip"
+        component={Trip}
       />
     </Stack.Navigator>
   );

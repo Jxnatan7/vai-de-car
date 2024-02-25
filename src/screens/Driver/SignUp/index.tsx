@@ -1,24 +1,24 @@
-import { useTheme } from "@shopify/restyle";
+import {useTheme} from "@shopify/restyle";
 
-import { Box, Text, ThemeProps } from "../../../theme";
-import { Layout } from "../../../components/Layout";
-import { Input } from "../../../components/Input";
-import { MainButton } from "../../../components/MainButton";
+import {Box, Text, ThemeProps} from "../../../theme";
+import {Layout} from "../../../components/Layout";
+import {Input} from "../../../components/Input";
+import {MainButton} from "../../../components/MainButton";
 import {
   KeyboardAvoidingView,
   Platform,
   TouchableOpacity,
   ScrollView,
 } from "react-native";
-import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
-import { SignUpDriverProps } from "../../../@types/SignUpDriverProps";
+import {faArrowRight} from "@fortawesome/free-solid-svg-icons";
+import {SignUpDriverProps} from "../../../@types/SignUpDriverProps";
 
-export default function SignUp({ navigation }: SignUpDriverProps) {
+export default function SignUp({navigation}: SignUpDriverProps) {
   const theme = useTheme<ThemeProps>();
   return (
     <Layout backButton headerTitle="Sobre você" navigation={navigation}>
       <Box flex={1} justifyContent="space-between">
-        <ScrollView style={{ flex: 1, paddingVertical: theme.spacing.l }}>
+        <ScrollView style={{flex: 1, paddingVertical: theme.spacing.l}}>
           <Input placeholder="Nome" />
           <Input placeholder="CPF" />
           <Input placeholder="CNH" />

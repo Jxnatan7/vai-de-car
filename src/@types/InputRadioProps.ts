@@ -1,5 +1,5 @@
 export type InputRadioProps = {
-    label: string;
-    selected: boolean;
-    onSelect: () => void;
+  label: string;
+  selected: boolean;
+  onSelect: () => void;
 };

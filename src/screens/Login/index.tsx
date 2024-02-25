@@ -1,24 +1,24 @@
-import { useTheme } from "@shopify/restyle";
+import {useTheme} from "@shopify/restyle";
 
-import { Box, Text, ThemeProps } from "../../theme";
+import {Box, Text, ThemeProps} from "../../theme";
 
-import { Layout } from "../../components/Layout";
-import { Input } from "../../components/Input";
-import { MainButton } from "../../components/MainButton";
+import {Layout} from "../../components/Layout";
+import {Input} from "../../components/Input";
+import {MainButton} from "../../components/MainButton";
 import {
   KeyboardAvoidingView,
   Platform,
   ScrollView,
   TouchableOpacity,
 } from "react-native";
-import { LoginProps } from "../../@types/LoginProps";
+import {LoginProps} from "../../@types/LoginProps";
 
-export default function Login({ navigation }: LoginProps) {
+export default function Login({navigation}: LoginProps) {
   const theme = useTheme<ThemeProps>();
   return (
     <Layout backButton headerTitle="Entrar" navigation={navigation}>
       <Box flex={1} justifyContent="space-between">
-        <ScrollView style={{ flex: 1, paddingVertical: theme.spacing.l }}>
+        <ScrollView style={{flex: 1, paddingVertical: theme.spacing.l}}>
           <Input placeholder="Email" />
           <Input placeholder="Senha" />
         </ScrollView>

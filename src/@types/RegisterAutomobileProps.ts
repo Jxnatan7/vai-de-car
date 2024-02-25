@@ -1,5 +1,5 @@
-import { NavigationProps } from "./NavigationProps";
+import {NavigationProps} from "./NavigationProps";
 
 export type RegisterAutomobileProps = {
-    navigation: NavigationProps;
+  navigation: NavigationProps;
 };

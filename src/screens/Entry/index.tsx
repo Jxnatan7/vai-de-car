@@ -1,10 +1,10 @@
-import { MainButton } from "../../components/MainButton";
+import {MainButton} from "../../components/MainButton";
 
-import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
-import { TouchableOpacity } from "react-native";
-import { Box, Text } from "../../theme";
+import {faArrowRight} from "@fortawesome/free-solid-svg-icons";
+import {TouchableOpacity} from "react-native";
+import {Box, Text} from "../../theme";
 
-export default function Entry({ navigation }: { navigation: any }) {
+export default function Entry({navigation}: {navigation: any}) {
   return (
     <Box
       flex={1}
@@ -40,7 +40,7 @@ export default function Entry({ navigation }: { navigation: any }) {
               activeOpacity={0.8}
               onPress={() => navigation.navigate("user-signup")}>
               <Text
-                style={{ textDecorationLine: "underline", fontWeight: "bold" }}>
+                style={{textDecorationLine: "underline", fontWeight: "bold"}}>
                 crie uma agora
               </Text>
             </TouchableOpacity>

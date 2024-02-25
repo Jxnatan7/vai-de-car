@@ -1,9 +1,9 @@
 import React from "react";
-import { Box, Text } from "../../theme";
-import { BackButton } from "../BackButton";
-import { HeaderProps } from "../../@types/HeaderProps";
+import {Box, Text} from "../../theme";
+import {BackButton} from "../BackButton";
+import {HeaderProps} from "../../@types/HeaderProps";
 
-export function Header({ title, backButton }: HeaderProps) {
+export function Header({title, backButton}: HeaderProps) {
   return (
     <Box
       width="100%"

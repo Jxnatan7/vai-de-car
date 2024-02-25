@@ -1,7 +1,7 @@
-import { ReactNode } from "react";
+import {ReactNode} from "react";
 
 export type BoxContainerProps = {
   children: ReactNode;
   headerTitle?: string;
-  backButton?: boolean
+  backButton?: boolean;
 };

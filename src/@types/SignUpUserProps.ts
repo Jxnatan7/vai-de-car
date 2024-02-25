@@ -1,5 +1,5 @@
-import { NavigationProps } from "./NavigationProps";
+import {NavigationProps} from "./NavigationProps";
 
 export type SignUpUserProps = {
-    navigation: NavigationProps;
+  navigation: NavigationProps;
 };

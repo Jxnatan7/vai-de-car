@@ -1,2 +1,1 @@
-export type NewTripProps = {
-};
+export type NewTripProps = {};
