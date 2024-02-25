@@ -10,16 +10,27 @@ import {
 import { InputRadio } from "../../../../../components/InputRadio";
 import { MainButton } from "../../../../../components/MainButton";
 import { useNavigation } from "@react-navigation/native";
+import { useForm } from "react-hook-form";
 
 const InfoTitle = ({ text }: { text: string }) => {
   return <Text color="very_dark_gray">{text}</Text>;
 };
 
+type FormData = {
+  latitudeFrom: number,
+  longitudeFrom: number,
+  latitudeTo: number,
+  longitudeTo: number,
+  price: number;
+}
+
 export default function ConfirmTrip({ route }) {
+
+  const navigation = useNavigation();
+  const [selectedOption, setSelectedOption] = useState<string | null>("TRIP_CAR");
+
   const routePickupParams = route?.params?.locationData?.from;
   const routeDestinationParams = route?.params?.locationData?.to;
-
-  console.log(routePickupParams);
 
   const pickupLocation = {
     latitude: routePickupParams?.latitude,
@@ -33,12 +44,26 @@ export default function ConfirmTrip({ route }) {
     stringAddress: routeDestinationParams?.stringAddress
   };
 
-  const navigation = useNavigation();
-  const [selectedOption, setSelectedOption] = useState<number | null>(0);
+  const {
+    register,
+    setValue,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormData>({
+    defaultValues: {
+      latitudeFrom: pickupLocation.latitude,
+      longitudeFrom: pickupLocation.longitude,
+      latitudeTo: destinationLocation.latitude,
+      longitudeTo: destinationLocation.latitude,
+      price: selectedOption === "TRIP_CAR" ? 10 : 5
+    }
+  });
+
+  const onSubmit = (data) => console.log(data)
   return (
     <Layout backButton headerTitle="Confirme a viagem">
       <Box width="100%" height="100%">
-        <Box mt="xxl" />
+        <Box mt="s" />
         <InfoTitle text="Saindo de:" />
         <TextInfo
           text={pickupLocation.stringAddress}
@@ -62,24 +87,24 @@ export default function ConfirmTrip({ route }) {
         />
         <InputRadio
           label="Carro - Até quatro pessoas"
-          selected={selectedOption === 0}
-          onSelect={() => setSelectedOption(0)}
+          selected={selectedOption === "TRIP_CAR"}
+          onSelect={() => setSelectedOption("TRIP_CAR")}
         />
         <InputRadio
           label="Moto - Até uma pessoa"
-          selected={selectedOption === 1}
-          onSelect={() => setSelectedOption(1)}
+          selected={selectedOption === "TRIP_MOTOCYCLE"}
+          onSelect={() => setSelectedOption("TRIP_MOTOCYCLE")}
         />
         <Box mt="l" />
         <Text fontSize={16} fontWeight="bold" color="text_dark">
           Valor da corrida:
         </Text>
         <Text fontSize={20} fontWeight="bold" color="text_success">
-          {selectedOption === 0 ? "R$10,00" : "R$5,00"}
+          {selectedOption === "TRIP_CAR" ? "R$10,00" : "R$5,00"}
         </Text>
         <Box mt="xxl" />
         <MainButton
-          action={() => navigation.navigate("trip")}
+          action={handleSubmit(onSubmit)}
           bg="btn_dark"
           color="text_light"
           text="CONFIRMAR VIAGEM"
