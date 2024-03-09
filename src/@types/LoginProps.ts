@@ -1,4 +1,4 @@
-import { NavigationProps } from "./NavigationProps";
+import {NavigationProps} from "./NavigationProps";
 
 export type LoginProps = {
   navigation: NavigationProps;

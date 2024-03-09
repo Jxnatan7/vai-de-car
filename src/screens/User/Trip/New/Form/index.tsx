@@ -1,13 +1,13 @@
 import React from "react";
-import { useState } from "react";
-import { Box } from "../../../../../theme";
-import { LocationInput } from "../../../../../components/LocationInput";
-import { MainButton } from "../../../../../components/MainButton";
-import { ScrollView } from "react-native-gesture-handler";
-import { NewTripFormProps } from "../../../../../@types/NewTripFormProps";
-import { useNavigation } from "@react-navigation/native";
+import {useState} from "react";
+import {Box} from "../../../../../theme";
+import {LocationInput} from "../../../../../components/LocationInput";
+import {MainButton} from "../../../../../components/MainButton";
+import {ScrollView} from "react-native-gesture-handler";
+import {NewTripFormProps} from "../../../../../@types/NewTripFormProps";
+import {useNavigation} from "@react-navigation/native";
 
-export function NewTripForm({ fetchLocationData, scrollDown }: NewTripFormProps) {
+export function NewTripForm({fetchLocationData, scrollDown}: NewTripFormProps) {
   const navigation = useNavigation();
 
   const [doneAddress, setDoneAddress] = useState<boolean>(false);
@@ -26,7 +26,11 @@ export function NewTripForm({ fetchLocationData, scrollDown }: NewTripFormProps)
     scrollDown();
   };
 
-  const fetchAddressCords = (latitude: number, longitude: number, formattedAddress: string) => {
+  const fetchAddressCords = (
+    latitude: number,
+    longitude: number,
+    formattedAddress: string,
+  ) => {
     setState({
       ...state,
       pickupCords: {
@@ -37,7 +41,11 @@ export function NewTripForm({ fetchLocationData, scrollDown }: NewTripFormProps)
     setPickupAddressString(formattedAddress);
   };
 
-  const fetchDestinationCords = (latitude: number, longitude: number, formattedAddress: string) => {
+  const fetchDestinationCords = (
+    latitude: number,
+    longitude: number,
+    formattedAddress: string,
+  ) => {
     setState({
       ...state,
       destinationCords: {
@@ -53,24 +61,25 @@ export function NewTripForm({ fetchLocationData, scrollDown }: NewTripFormProps)
       {doneAddress ? (
         <ScrollView
           keyboardShouldPersistTaps="handled"
-          style={{ width: "100%", flex: 1, height: 300 }}
-          contentContainerStyle={{ alignItems: "center" }}>
+          style={{width: "100%", flex: 1, height: 300}}
+          contentContainerStyle={{alignItems: "center"}}>
           <MainButton
-            action={() => navigation.navigate("confirm-trip", {
-              locationData:
-              {
-                from: {
-                  latitude: state.pickupCords?.latitude,
-                  longitude: state.pickupCords?.longitude,
-                  stringAddress: pickupAddressString
+            action={() =>
+              navigation.navigate("confirm-trip", {
+                locationData: {
+                  from: {
+                    latitude: state.pickupCords?.latitude,
+                    longitude: state.pickupCords?.longitude,
+                    stringAddress: pickupAddressString,
+                  },
+                  to: {
+                    latitude: state.destinationCords?.latitude,
+                    longitude: state.destinationCords?.longitude,
+                    stringAddress: destinationAddressString,
+                  },
                 },
-                to: {
-                  latitude: state.destinationCords?.latitude,
-                  longitude: state.destinationCords?.longitude,
-                  stringAddress: destinationAddressString
-                }
-              }
-            })}
+              })
+            }
             bg="blue"
             color="text_light"
             text="Confirmar endereço"
@@ -86,8 +95,8 @@ export function NewTripForm({ fetchLocationData, scrollDown }: NewTripFormProps)
       ) : (
         <ScrollView
           keyboardShouldPersistTaps="handled"
-          style={{ width: "100%", flex: 1, height: 300 }}
-          contentContainerStyle={{ alignItems: "center" }}>
+          style={{width: "100%", flex: 1, height: 300}}
+          contentContainerStyle={{alignItems: "center"}}>
           <LocationInput
             fetchAddress={fetchAddressCords}
             placeholder="Onde você está?"

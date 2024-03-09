@@ -1,10 +1,16 @@
 import React from "react";
-import { useTheme } from "@shopify/restyle";
-import { ThemeProps } from "../../theme";
-import { TextInput } from "react-native";
-import { InputProps } from "../../@types/InputProps";
+import {useTheme} from "@shopify/restyle";
+import {ThemeProps} from "../../theme";
+import {TextInput} from "react-native";
+import {InputProps} from "../../@types/InputProps";
 
-export function Input({ placeholder, onBlur, onChange, value, type }: InputProps) {
+export function Input({
+  placeholder,
+  onBlur,
+  onChange,
+  value,
+  type,
+}: InputProps) {
   const theme = useTheme<ThemeProps>();
   return (
     <TextInput

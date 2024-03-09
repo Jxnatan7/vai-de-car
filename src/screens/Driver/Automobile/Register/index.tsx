@@ -1,6 +1,6 @@
-import React, {useState} from "react";
+import React from "react";
 
-import {Box, Text, ThemeProps} from "../../../../theme";
+import {Box, ThemeProps} from "../../../../theme";
 
 import {Layout} from "../../../../components/Layout";
 import {Input} from "../../../../components/Input";
@@ -10,30 +10,102 @@ import {InputRadio} from "../../../../components/InputRadio";
 import {useTheme} from "@shopify/restyle";
 import {RegisterAutomobileProps} from "../../../../@types/RegisterAutomobileProps";
 import {TextInfo} from "../../../../components/TextInfo";
+import {RegisterDriveRequest} from "../../../../@types/RegisterDriveRequest";
+import {Controller, useForm} from "react-hook-form";
+import {
+  DriverRegisterRequest,
+  UserRegisterRequest,
+} from "../../../../@types/requests/DriverRegisterRequest";
+import {driverRegister} from "../../../../services/auth/driverRegister";
 
-export default function Register({navigation}: RegisterAutomobileProps) {
+export default function Register({navigation, route}: RegisterAutomobileProps) {
+  const formData: RegisterDriveRequest = route.params?.data;
+
+  const userRequest: UserRegisterRequest = {
+    name: formData.name,
+    cpf: formData.cpf,
+    email: formData.email,
+    phone: formData.phone,
+    password: formData.password,
+  };
+
   const theme = useTheme<ThemeProps>();
 
-  const [selectedOption, setSelectedOption] = useState<number | null>(null);
+  const {
+    control,
+    handleSubmit,
+    formState: {errors},
+  } = useForm<DriverRegisterRequest>({
+    defaultValues: {
+      user: userRequest,
+      cnh: formData.cnh,
+    },
+  });
+
+  const onSubmit = (data: DriverRegisterRequest) => {
+    driverRegister(data, navigation);
+  };
 
   return (
-    <Layout backButton headerTitle="Seu veículo" navigation={navigation}>
+    <Layout backButton headerTitle="Seu veículo">
       <Box flex={1} justifyContent="space-between">
         <ScrollView style={{flex: 1, paddingVertical: theme.spacing.l}}>
           <TextInfo text="Qual é o tipo de veículo?" />
-          <InputRadio
-            label="Carro"
-            selected={selectedOption === 0}
-            onSelect={() => setSelectedOption(0)}
+
+          <Controller
+            control={control}
+            name="automobile.type"
+            defaultValue="CAR"
+            render={({field: {onChange, value}}) => (
+              <InputRadio
+                label="Carro"
+                selected={value === "CAR"}
+                onSelect={() => onChange("CAR")}
+              />
+            )}
           />
-          <InputRadio
-            label="Moto"
-            selected={selectedOption === 1}
-            onSelect={() => setSelectedOption(1)}
+          <Controller
+            control={control}
+            name="automobile.type"
+            defaultValue="MOTORCYCLE"
+            render={({field: {onChange, value}}) => (
+              <InputRadio
+                label="Moto"
+                selected={value === "MOTORCYCLE"}
+                onSelect={() => onChange("MOTORCYCLE")}
+              />
+            )}
           />
-          <Input placeholder="Modelo" />
-          <Input placeholder="Cor" />
-          <Input placeholder="Placa" />
+          <Controller
+            control={control}
+            rules={{
+              required: true,
+            }}
+            render={({field: {onChange, onBlur, value}}) => (
+              <Input
+                placeholder="Modelo"
+                onChange={onChange}
+                onBlur={onBlur}
+                value={value}
+              />
+            )}
+            name="automobile.model"
+          />
+          <Controller
+            control={control}
+            rules={{
+              required: true,
+            }}
+            render={({field: {onChange, onBlur, value}}) => (
+              <Input
+                placeholder="Placa"
+                onChange={onChange}
+                onBlur={onBlur}
+                value={value}
+              />
+            )}
+            name="automobile.licensePlate"
+          />
         </ScrollView>
         <KeyboardAvoidingView
           behavior={Platform.OS === "ios" ? "padding" : undefined}
@@ -42,7 +114,7 @@ export default function Register({navigation}: RegisterAutomobileProps) {
           <Box alignItems="center" marginTop="l">
             <Box marginBottom="s">
               <MainButton
-                action={() => navigation.navigate("automobile-register")}
+                action={handleSubmit(onSubmit)}
                 bg="btn_dark"
                 color="text_light"
                 text="Concluir Cadastro"

@@ -1,9 +1,9 @@
-import { TextInputProps } from "react-native";
+import {TextInputProps} from "react-native";
 
 export type InputProps = {
-  placeholder: string,
-  onChange?: () => void,
-  onBlur?: () => void,
+  placeholder: string;
+  onChange?: () => void;
+  onBlur?: () => void;
   value?: string | number;
-  type?: TextInputProps['inputMode'],
+  type?: TextInputProps["inputMode"];
 };

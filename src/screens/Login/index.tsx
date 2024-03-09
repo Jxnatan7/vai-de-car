@@ -1,83 +1,73 @@
 import React from "react";
-import { useTheme } from "@shopify/restyle";
+import {useTheme} from "@shopify/restyle";
 
-import { Box, Text, ThemeProps } from "../../theme";
+import {Box, Text, ThemeProps} from "../../theme";
 
-import { Layout } from "../../components/Layout";
-import { Input } from "../../components/Input";
-import { MainButton } from "../../components/MainButton";
+import {Layout} from "../../components/Layout";
+import {Input} from "../../components/Input";
+import {MainButton} from "../../components/MainButton";
 import {
   KeyboardAvoidingView,
   Platform,
   ScrollView,
   TouchableOpacity,
 } from "react-native";
-import { LoginProps } from "../../@types/LoginProps";
-import { Controller, useForm } from "react-hook-form";
-import api from "../../config/axiosConfig";
-import { storage } from "../../config/storage";
+import {LoginProps} from "../../@types/LoginProps";
+import {Controller, useForm} from "react-hook-form";
+import {LoginRequest} from "../../@types/requests/LoginRequest";
+import {login} from "../../services/auth/login";
 
-type LoginRequest = {
-  email: string,
-  password: string,
-};
-
-type LoginResponse = {
-  token: string,
-  name: string,
-  type: string,
-  driver: boolean
-};
-
-export default function Login({ navigation }: LoginProps) {
+export default function Login({navigation}: LoginProps) {
   const theme = useTheme<ThemeProps>();
 
   const {
     control,
     handleSubmit,
-    formState: { errors },
-  } = useForm<LoginRequest>({})
+    formState: {errors},
+  } = useForm<LoginRequest>({});
+
   const onSubmit = (data: LoginRequest) => {
-    api.post('/auth/login', data)
-      .then(function (response) {
-        const data = response?.data;
-        storage.set("user.token", data?.token);
-        navigation.navigate("new-trip");
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    login(data, navigation);
   };
 
   return (
     <Layout backButton headerTitle="Entrar">
       <Box flex={1} justifyContent="space-between">
-        <ScrollView style={{ flex: 1, paddingVertical: theme.spacing.l }}>
+        <ScrollView style={{flex: 1, paddingVertical: theme.spacing.l}}>
           <Controller
             control={control}
             rules={{
               required: true,
             }}
-            render={({ field: { onChange, onBlur, value } }) => (
-              <Input placeholder="Email" onChange={onChange} onBlur={onBlur} value={value} type="email" />
+            render={({field: {onChange, onBlur, value}}) => (
+              <Input
+                placeholder="Email"
+                onChange={onChange}
+                onBlur={onBlur}
+                value={value}
+                type="email"
+              />
             )}
             name="email"
           />
           {errors.email && <Text>This is required.</Text>}
 
-
           <Controller
             control={control}
             rules={{
               required: true,
             }}
-            render={({ field: { onChange, onBlur, value } }) => (
-              <Input placeholder="Senha" onChange={onChange} onBlur={onBlur} value={value} />
+            render={({field: {onChange, onBlur, value}}) => (
+              <Input
+                placeholder="Senha"
+                onChange={onChange}
+                onBlur={onBlur}
+                value={value}
+              />
             )}
             name="password"
           />
           {errors.password && <Text>This is required.</Text>}
-
         </ScrollView>
         <KeyboardAvoidingView
           behavior={Platform.OS === "ios" ? "padding" : undefined}
@@ -86,13 +76,15 @@ export default function Login({ navigation }: LoginProps) {
           <Box alignItems="center" marginTop="l">
             <Box marginBottom="s">
               <MainButton
-                action={handleSubmit(onSubmit)}
+                action={() => navigation.navigate("new-trip")}
                 bg="btn_dark"
                 color="text_light"
                 text="Acessar conta"
               />
             </Box>
-            <TouchableOpacity activeOpacity={0.8} onPress={() => ""}>
+            <TouchableOpacity
+              activeOpacity={0.8}
+              onPress={handleSubmit(onSubmit)}>
               <Text color="text_orange" fontWeight="bold">
                 Esqueceu sua senha?
               </Text>
