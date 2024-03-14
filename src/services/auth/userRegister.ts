@@ -1,9 +1,9 @@
 import api from "../../config/axiosConfig";
-import {UserRegisterRequest} from "../../@types/requests/UserRegisterRequest";
-import {HttpStatusCode} from "axios";
-import {login} from "./login";
-import {LoginRequest} from "../../@types/requests/LoginRequest";
-import {NavigationProp} from "@react-navigation/native";
+import { UserRegisterRequest } from "../../@types/requests/UserRegisterRequest";
+import { HttpStatusCode } from "axios";
+import { login } from "./login";
+import { LoginRequest } from "../../@types/requests/LoginRequest";
+import { NavigationProp } from "@react-navigation/native";
 
 export const userRegister = (
   data: UserRegisterRequest,

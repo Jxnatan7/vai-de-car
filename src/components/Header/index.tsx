@@ -1,9 +1,10 @@
 import React from "react";
-import {Box, Text} from "../../theme";
-import {BackButton} from "../BackButton";
-import {HeaderProps} from "../../@types/HeaderProps";
+import { Box, Text } from "../../theme";
+import { BackButton } from "../BackButton";
+import { HeaderProps } from "../../@types/HeaderProps";
+import { AboutUser } from "../AboutUser";
 
-export function Header({title, backButton}: HeaderProps) {
+export function Header({ title, backButton, aboutUser }: HeaderProps) {
   return (
     <Box
       width="100%"
@@ -13,7 +14,7 @@ export function Header({title, backButton}: HeaderProps) {
       mb="xl">
       {(backButton && <BackButton />) ?? <Box />}
       <Text variant="header">{title}</Text>
-      <Box />
+      {(aboutUser && <AboutUser />) ?? <Box />}
     </Box>
   );
 }

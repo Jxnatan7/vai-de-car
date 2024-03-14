@@ -1,9 +1,9 @@
-import {NavigationProp, useNavigation} from "@react-navigation/native";
-import {DriverRegisterRequest} from "../../@types/requests/DriverRegisterRequest";
+import { NavigationProp, useNavigation } from "@react-navigation/native";
+import { DriverRegisterRequest } from "../../@types/requests/DriverRegisterRequest";
 import api from "../../config/axiosConfig";
-import {login} from "./login";
-import {HttpStatusCode} from "axios";
-import {LoginRequest} from "../../@types/requests/LoginRequest";
+import { login } from "./login";
+import { HttpStatusCode } from "axios";
+import { LoginRequest } from "../../@types/requests/LoginRequest";
 
 export const driverRegister = (
   data: DriverRegisterRequest,

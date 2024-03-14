@@ -1,12 +1,13 @@
 import React from "react";
-import {BoxContainerProps} from "../../@types/BoxContainerProps";
-import {Box} from "../../theme";
-import {Header} from "../Header";
+import { BoxContainerProps } from "../../@types/BoxContainerProps";
+import { Box } from "../../theme";
+import { Header } from "../Header";
 
 export default function BoxContainer({
   children,
   headerTitle,
   backButton,
+  aboutUser
 }: BoxContainerProps) {
   return (
     <Box
@@ -15,7 +16,7 @@ export default function BoxContainer({
       height="100%"
       p="l"
       alignItems="center">
-      <Header title={headerTitle} backButton={backButton} />
+      <Header title={headerTitle} backButton={backButton} aboutUser={aboutUser} />
       {children}
     </Box>
   );

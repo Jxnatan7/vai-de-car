@@ -1,29 +1,29 @@
 import React from "react";
-import {useTheme} from "@shopify/restyle";
+import { useTheme } from "@shopify/restyle";
 
-import {Box, Text, ThemeProps} from "../../theme";
+import { Box, Text, ThemeProps } from "../../theme";
 
-import {Layout} from "../../components/Layout";
-import {Input} from "../../components/Input";
-import {MainButton} from "../../components/MainButton";
+import { Layout } from "../../components/Layout";
+import { Input } from "../../components/Input";
+import { MainButton } from "../../components/MainButton";
 import {
   KeyboardAvoidingView,
   Platform,
   ScrollView,
   TouchableOpacity,
 } from "react-native";
-import {LoginProps} from "../../@types/LoginProps";
-import {Controller, useForm} from "react-hook-form";
-import {LoginRequest} from "../../@types/requests/LoginRequest";
-import {login} from "../../services/auth/login";
+import { LoginProps } from "../../@types/LoginProps";
+import { Controller, useForm } from "react-hook-form";
+import { LoginRequest } from "../../@types/requests/LoginRequest";
+import { login } from "../../services/auth/login";
 
-export default function Login({navigation}: LoginProps) {
+export default function Login({ navigation }: LoginProps) {
   const theme = useTheme<ThemeProps>();
 
   const {
     control,
     handleSubmit,
-    formState: {errors},
+    formState: { errors },
   } = useForm<LoginRequest>({});
 
   const onSubmit = (data: LoginRequest) => {
@@ -33,13 +33,13 @@ export default function Login({navigation}: LoginProps) {
   return (
     <Layout backButton headerTitle="Entrar">
       <Box flex={1} justifyContent="space-between">
-        <ScrollView style={{flex: 1, paddingVertical: theme.spacing.l}}>
+        <ScrollView style={{ flex: 1, paddingVertical: theme.spacing.l }}>
           <Controller
             control={control}
             rules={{
               required: true,
             }}
-            render={({field: {onChange, onBlur, value}}) => (
+            render={({ field: { onChange, onBlur, value } }) => (
               <Input
                 placeholder="Email"
                 onChange={onChange}
@@ -57,7 +57,7 @@ export default function Login({navigation}: LoginProps) {
             rules={{
               required: true,
             }}
-            render={({field: {onChange, onBlur, value}}) => (
+            render={({ field: { onChange, onBlur, value } }) => (
               <Input
                 placeholder="Senha"
                 onChange={onChange}
@@ -76,7 +76,7 @@ export default function Login({navigation}: LoginProps) {
           <Box alignItems="center" marginTop="l">
             <Box marginBottom="s">
               <MainButton
-                action={() => navigation.navigate("new-trip")}
+                action={handleSubmit(onSubmit)}
                 bg="btn_dark"
                 color="text_light"
                 text="Acessar conta"

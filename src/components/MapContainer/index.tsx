@@ -1,19 +1,17 @@
-import React, {useEffect, useRef, useState} from "react";
-import {Box} from "../../theme";
-import MapView, {Marker, PROVIDER_GOOGLE} from "react-native-maps";
-import {BottomSheet} from "../BottomSheet";
-import {BackButton} from "../BackButton";
-import {MapContainerProps} from "../../@types/MapContainerProps";
+import React, { useEffect, useRef, useState } from "react";
+import { Box } from "../../theme";
+import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
+import { BottomSheet } from "../BottomSheet";
+import { BackButton } from "../BackButton";
+import { MapContainerProps } from "../../@types/MapContainerProps";
 import Geolocation, {
   GeolocationResponse,
 } from "@react-native-community/geolocation";
-import {fetchLocationDataProps} from "../../@types/NewTripFormProps";
-import {google_api_key} from "../../config/index.json";
+import { fetchLocationDataProps } from "../../@types/NewTripFormProps";
+import { google_api_key } from "../../config/index.json";
 import MapViewDirections from "react-native-maps-directions";
-import {FontAwesomeIcon} from "@fortawesome/react-native-fontawesome";
-import {faLocationArrow} from "@fortawesome/free-solid-svg-icons";
 
-export function MapContainer({children}: MapContainerProps) {
+export function MapContainer({ children, backButton }: MapContainerProps) {
   const [location, setLocation] = useState<GeolocationResponse>();
 
   useEffect(() => {
@@ -23,7 +21,7 @@ export function MapContainer({children}: MapContainerProps) {
         setLocation(location);
       },
       error => console.log(error),
-      {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000},
+      { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
     );
   }, []);
 
@@ -53,7 +51,7 @@ export function MapContainer({children}: MapContainerProps) {
     }
   }, [location]);
 
-  const {startingCords, destinationCords} = state;
+  const { startingCords, destinationCords } = state;
 
   const fetchLocationData = (data: fetchLocationDataProps) => {
     setState({
@@ -83,7 +81,7 @@ export function MapContainer({children}: MapContainerProps) {
           borderRadius={50}
           justifyContent="center"
           alignItems="center">
-          <BackButton />
+          {backButton && (<BackButton />)}
         </Box>
       </Box>
       {location && (
@@ -129,7 +127,7 @@ export function MapContainer({children}: MapContainerProps) {
         </MapView>
       )}
       <BottomSheet>
-        {React.cloneElement(children, {fetchLocationData})}
+        {React.cloneElement(children, { fetchLocationData })}
       </BottomSheet>
     </Box>
   );
