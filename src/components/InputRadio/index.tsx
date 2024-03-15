@@ -1,15 +1,15 @@
 import React from "react";
-import { useTheme } from "@shopify/restyle";
-import { Box, Text, ThemeProps } from "../../theme";
-import { TouchableOpacity } from "react-native";
-import { InputRadioProps } from "../../@types/InputRadioProps";
+import {useTheme} from "@shopify/restyle";
+import {Box, Text, ThemeProps} from "../../theme";
+import {TouchableOpacity} from "react-native";
+import {InputRadioProps} from "../../@types/InputRadioProps";
 
-export function InputRadio({ label, selected, onSelect }: InputRadioProps) {
+export function InputRadio({label, selected, onSelect}: InputRadioProps) {
   const theme = useTheme<ThemeProps>();
   return (
     <TouchableOpacity
       onPress={onSelect}
-      style={{ paddingBottom: theme.spacing.l }}>
+      style={{paddingBottom: theme.spacing.l}}>
       <Box flexDirection="row" alignItems="center">
         <Box
           width={20}

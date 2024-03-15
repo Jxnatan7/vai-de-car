@@ -1,3 +1,4 @@
+import React from "react";
 import { useTheme } from "@shopify/restyle";
 
 import { Box, Text, ThemeProps } from "../../../theme";
@@ -11,33 +12,123 @@ import {
   ScrollView,
 } from "react-native";
 import { SignUpUserProps } from "../../../@types/SignUpUserProps";
+import { Controller, useForm } from "react-hook-form";
+import { UserRegisterRequest } from "../../../@types/requests/UserRegisterRequest";
+import { userRegister } from "../../../services/auth/userRegister";
 
 export default function SignUp({ navigation }: SignUpUserProps) {
   const theme = useTheme<ThemeProps>();
+
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<UserRegisterRequest>({});
+
+  const onSubmit = (data: UserRegisterRequest) => {
+    userRegister(data, navigation);
+  };
+
   return (
-    <Layout backButton headerTitle="Sobre você" navigation={navigation}>
+    <Layout backButton headerTitle="Sobre você">
       <Box flex={1} justifyContent="space-between">
         <ScrollView style={{ flex: 1, paddingVertical: theme.spacing.l }}>
-          <Input placeholder="Nome" />
-          <Input placeholder="CPF" />
-          <Input placeholder="Email" />
-          <Input placeholder="Telefone" />
-          <Input placeholder="Senha" />
+          <Controller
+            control={control}
+            rules={{
+              required: true,
+            }}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <Input
+                placeholder="Nome"
+                onChange={onChange}
+                onBlur={onBlur}
+                value={value}
+              />
+            )}
+            name="name"
+          />
+          {errors.name && <Text>This is required.</Text>}
+
+          <Controller
+            control={control}
+            rules={{
+              required: true,
+            }}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <Input
+                placeholder="CPF"
+                onChange={onChange}
+                onBlur={onBlur}
+                value={value}
+                type="numeric"
+              />
+            )}
+            name="cpf"
+          />
+          {errors.cpf && <Text>This is required.</Text>}
+
+          <Controller
+            control={control}
+            rules={{
+              required: true,
+            }}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <Input
+                placeholder="Email"
+                onChange={onChange}
+                onBlur={onBlur}
+                value={value}
+                type="email"
+              />
+            )}
+            name="email"
+          />
+          {errors.email && <Text>This is required.</Text>}
+
+          <Controller
+            control={control}
+            rules={{
+              required: true,
+            }}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <Input
+                placeholder="Telefone"
+                onChange={onChange}
+                onBlur={onBlur}
+                value={value}
+                type="numeric"
+              />
+            )}
+            name="phone"
+          />
+          {errors.email && <Text>This is required.</Text>}
+
+          <Controller
+            control={control}
+            rules={{
+              required: true,
+            }}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <Input
+                placeholder="Senha"
+                onChange={onChange}
+                onBlur={onBlur}
+                value={value}
+              />
+            )}
+            name="password"
+          />
+          {errors.email && <Text>This is required.</Text>}
+
           <TouchableOpacity
             activeOpacity={0.8}
             onPress={() => navigation.navigate("driver-signup")}>
             <Box mb="xl" flexDirection="row" alignItems="center">
-              <Text
-                fontSize={16}
-                color="text_orange"
-                pr="s"
-              >
+              <Text fontSize={16} color="text_orange" pr="s">
                 Quero me cadastrar como
               </Text>
-              <Text
-                color="text_orange"
-                fontSize={16}
-                fontWeight="bold">
+              <Text color="text_orange" fontSize={16} fontWeight="bold">
                 Motorista
               </Text>
             </Box>
@@ -50,7 +141,7 @@ export default function SignUp({ navigation }: SignUpUserProps) {
           <Box alignItems="center" marginTop="l">
             <Box marginBottom="s">
               <MainButton
-                action={() => console.log("TESTE")}
+                action={handleSubmit(onSubmit)}
                 bg="btn_dark"
                 color="text_light"
                 text="Criar conta"

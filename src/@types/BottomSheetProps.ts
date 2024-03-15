@@ -1,5 +1,5 @@
-import { ReactNode } from "react";
+import {ReactElement} from "react";
 
 export type BottomSheetProps = {
-    children: ReactNode
+  children: ReactElement;
 };

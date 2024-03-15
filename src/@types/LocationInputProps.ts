@@ -1,4 +1,4 @@
 export type LocationInputProps = {
-    placeholder: string;
-    fetchAddress: any;
+  placeholder: string;
+  fetchAddress: any;
 };

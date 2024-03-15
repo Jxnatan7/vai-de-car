@@ -3,11 +3,15 @@ import { Box, Text, ThemeProps } from "../../theme";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { TouchableOpacity } from "react-native";
 import { MainButtonProps } from "../../@types/MainButton";
-import { useTheme } from "@shopify/restyle";
 
-
-export function MainButton({ text, color, bg, icon, action, marginTop }: MainButtonProps) {
-  const theme = useTheme<ThemeProps>();
+export function MainButton({
+  text,
+  color,
+  bg,
+  icon,
+  action,
+  marginTop,
+}: MainButtonProps) {
   return (
     <TouchableOpacity activeOpacity={0.8} onPress={action}>
       <Box
@@ -17,9 +21,9 @@ export function MainButton({ text, color, bg, icon, action, marginTop }: MainBut
         flexDirection="row"
         justifyContent="center"
         alignItems="center"
+        alignSelf="center"
         borderRadius={100}
-        marginTop={marginTop}
-      >
+        marginTop={marginTop}>
         <Box>
           <Text variant="button" color={color}>
             {text}

@@ -1,5 +1,6 @@
 import { ReactElement } from "react";
 
 export type MapContainerProps = {
-    children: ReactElement
+  backButton?: boolean,
+  children: ReactElement;
 };

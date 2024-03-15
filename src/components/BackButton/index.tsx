@@ -1,12 +1,12 @@
 import React from "react";
-import { TouchableOpacity } from "react-native";
-import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
-import { Box } from "../../theme";
-import { BackButtonProps } from "../../@types/BackButtonProps";
-import { useNavigation } from "@react-navigation/native";
+import {TouchableOpacity} from "react-native";
+import {FontAwesomeIcon} from "@fortawesome/react-native-fontawesome";
+import {faArrowLeft} from "@fortawesome/free-solid-svg-icons";
+import {Box} from "../../theme";
+import {BackButtonProps} from "../../@types/BackButtonProps";
+import {useNavigation} from "@react-navigation/native";
 
-export function BackButton({ color }: BackButtonProps) {
+export function BackButton({color}: BackButtonProps) {
   const navigation = useNavigation();
   return (
     <Box width={25} height={25} justifyContent="center" alignItems="center">

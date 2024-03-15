@@ -9,15 +9,14 @@ export function Layout({
   headerTitle,
   backButton,
   isMap,
+  aboutUser
 }: LayoutPropsProps) {
   return (
     <SafeAreaView>
       {isMap ? (
-        <MapContainer>
-          {children}
-        </MapContainer>
+        <MapContainer backButton={backButton}>{children}</MapContainer>
       ) : (
-        <BoxContainer headerTitle={headerTitle} backButton={backButton}>
+        <BoxContainer headerTitle={headerTitle} backButton={backButton} aboutUser={aboutUser}>
           {children}
         </BoxContainer>
       )}

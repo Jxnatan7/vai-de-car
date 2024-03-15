@@ -1,11 +1,22 @@
 import React from "react";
-import { Text } from "../../theme";
+import { Box, Text } from "../../theme";
 import { TextInfoProps } from "../../@types/TextInfoProps";
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 
-export function TextInfo({ text, color }: TextInfoProps) {
-    return (
-        <Text pb="l" pt="l" color={color ?? "text_dark"} fontSize={16} fontWeight="bold">
-            {text}
-        </Text>
-    );
+export function TextInfo({ text, color, marginTop, icon }: TextInfoProps) {
+  return (
+    <Box
+      flexDirection="row"
+      alignItems="center"
+      gap="s"
+      pb="l"
+      mt={marginTop ?? "l"}>
+      {
+        icon && (<FontAwesomeIcon icon={icon} color={color} size={16} />)
+      }
+      <Text color={color ?? "text_dark"} fontSize={16} fontWeight="bold">
+        {text}
+      </Text>
+    </Box>
+  );
 }
