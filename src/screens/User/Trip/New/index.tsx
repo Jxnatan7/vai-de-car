@@ -6,7 +6,7 @@ import { storage } from "../../../../config/storage";
 
 export default function NewTrip() {
   return (
-    <Layout isMap>
+    <Layout isMap backButton>
       <NewTripForm
         fetchLocationData={function (): void {
           throw new Error("Function not implemented.");

@@ -10,20 +10,14 @@ import Geolocation, {
 import { fetchLocationDataProps } from "../../@types/NewTripFormProps";
 import { google_api_key } from "../../config/index.json";
 import MapViewDirections from "react-native-maps-directions";
+import { useLocation } from "../../context/LocationContext";
 
 export function MapContainer({ children, backButton }: MapContainerProps) {
-  const [location, setLocation] = useState<GeolocationResponse>();
+  const location = useLocation();
 
-  useEffect(() => {
-    Geolocation.getCurrentPosition(
-      position => {
-        const location = position;
-        setLocation(location);
-      },
-      error => console.log(error),
-      { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
-    );
-  }, []);
+  if (!location) {
+    return <p>Obtendo localização...</p>;
+  }
 
   const [state, setState] = useState({
     startingCords: {

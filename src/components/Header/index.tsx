@@ -3,8 +3,9 @@ import { Box, Text } from "../../theme";
 import { BackButton } from "../BackButton";
 import { HeaderProps } from "../../@types/HeaderProps";
 import { AboutUser } from "../AboutUser";
+import { Brand } from "../Brand";
 
-export function Header({ title, backButton, aboutUser }: HeaderProps) {
+export function Header({ title, backButton, aboutUser, brand }: HeaderProps) {
   return (
     <Box
       width="100%"
@@ -12,7 +13,7 @@ export function Header({ title, backButton, aboutUser }: HeaderProps) {
       alignItems="center"
       justifyContent="space-between"
       mb="xl">
-      {(backButton && <BackButton />) ?? <Box />}
+      {(backButton && <BackButton />) ?? (brand && <Brand />) ?? <Box />}
       <Text variant="header">{title}</Text>
       {(aboutUser && <AboutUser />) ?? <Box />}
     </Box>

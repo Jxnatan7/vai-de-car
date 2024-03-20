@@ -5,4 +5,5 @@ export type BoxContainerProps = {
   headerTitle?: string,
   backButton?: boolean,
   aboutUser?: boolean,
+  brand?: boolean
 };

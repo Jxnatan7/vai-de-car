@@ -9,6 +9,8 @@ import NewTrip from "../screens/User/Trip/New";
 import ConfirmTrip from "../screens/User/Trip/New/Confirm";
 import Trip from "../screens/User/Trip";
 import DriverHome from "../screens/Driver/Home";
+import UserHome from "../screens/User/Home";
+import UserInfo from "../screens/User/Info";
 
 const Stack = createNativeStackNavigator();
 
@@ -59,6 +61,16 @@ export default function Routes() {
         options={{ headerShown: false }}
         name="driver-home"
         component={DriverHome}
+      />
+      <Stack.Screen
+        options={{ headerShown: false }}
+        name="user-home"
+        component={UserHome}
+      />
+      <Stack.Screen
+        options={{ headerShown: false }}
+        name="user-info"
+        component={UserInfo}
       />
     </Stack.Navigator>
   );

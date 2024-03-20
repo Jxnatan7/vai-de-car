@@ -9,8 +9,17 @@ export const login = (data: LoginRequest, navigation: NavigationProp<any>) => {
     .then(function (response) {
       const data = response.data;
       storage.set("user.token", data?.token);
+      storage.set("user.name", data?.name);
+      storage.set("user.driver", data?.driver);
+
+      if (data?.driver === true) {
+        //@ts-ignore
+        navigation.navigate("driver-home");
+        return;
+      }
+
       //@ts-ignore
-      navigation.navigate("driver-home");
+      navigation.navigate("user-home");
     })
     .catch(function (error) {
       console.log(error);

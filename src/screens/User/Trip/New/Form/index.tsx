@@ -1,15 +1,24 @@
 import React from "react";
-import {useState} from "react";
-import {Box} from "../../../../../theme";
-import {LocationInput} from "../../../../../components/LocationInput";
-import {MainButton} from "../../../../../components/MainButton";
-import {ScrollView} from "react-native-gesture-handler";
-import {NewTripFormProps} from "../../../../../@types/NewTripFormProps";
-import {useNavigation} from "@react-navigation/native";
+import { useState } from "react";
+import { Box, theme } from "../../../../../theme";
+import { LocationInput } from "../../../../../components/LocationInput";
+import { MainButton } from "../../../../../components/MainButton";
+import { NewTripFormProps } from "../../../../../@types/NewTripFormProps";
+import { useNavigation } from "@react-navigation/native";
+import { useLocation } from "../../../../../context/LocationContext";
+import { ScrollView } from 'react-native-virtualized-view';
+import { TextInput } from "react-native";
+import { fetchGoogleMapsData } from "../../../../../services/FetchGoogleMapsAPI";
 
-export function NewTripForm({fetchLocationData, scrollDown}: NewTripFormProps) {
+export function NewTripForm({ fetchLocationData, scrollDown }: NewTripFormProps) {
   const navigation = useNavigation();
+  const location = useLocation();
 
+  if (!location) {
+    return <p>Obtendo localização...</p>;
+  }
+
+  const [useCurrentAddress, setUseCurrentAddress] = useState<boolean | null>(null);
   const [doneAddress, setDoneAddress] = useState<boolean>(false);
 
   const [pickupAddressString, setPickupAddressString] = useState("");
@@ -19,6 +28,24 @@ export function NewTripForm({fetchLocationData, scrollDown}: NewTripFormProps) {
     pickupCords: {},
     destinationCords: {},
   });
+
+  const currentAddress = () => {
+    setState({
+      ...state,
+      pickupCords: {
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude
+      }
+    });
+    setUseCurrentAddress(true);
+    fetchGoogleMapsData(location.coords.latitude, location.coords.longitude)
+      .then((data) => {
+        setPickupAddressString(data.results[0].formatted_address);
+      })
+      .catch((error) => {
+        console.error('Erro ao acessar a API do Google Maps:', error.message);
+      });
+  };
 
   const onDone = () => {
     fetchLocationData(state);
@@ -58,13 +85,40 @@ export function NewTripForm({fetchLocationData, scrollDown}: NewTripFormProps) {
 
   return (
     <Box width="100%" height="100%" justifyContent="space-around">
-      {doneAddress ? (
-        <ScrollView
-          keyboardShouldPersistTaps="handled"
-          style={{width: "100%", flex: 1, height: 300}}
-          contentContainerStyle={{alignItems: "center"}}>
+      {
+        useCurrentAddress === null && (
+          <Box
+            flex={1}
+            width="100%"
+            height={300}
+            alignItems="center"
+          >
+            <MainButton
+              action={() => currentAddress()}
+              bg="blue"
+              color="text_light"
+              text="Quero usar a minha localização atual"
+            />
+            <MainButton
+              action={() => setUseCurrentAddress(false)}
+              bg="dark_gray"
+              color="text_light"
+              text="Buscar outro endereço"
+              marginTop="m"
+            />
+          </Box>
+        )
+      }
+      {doneAddress && (
+        <Box
+          flex={1}
+          width="100%"
+          height={300}
+          alignItems="center"
+        >
           <MainButton
             action={() =>
+              // @ts-ignore
               navigation.navigate("confirm-trip", {
                 locationData: {
                   from: {
@@ -91,32 +145,53 @@ export function NewTripForm({fetchLocationData, scrollDown}: NewTripFormProps) {
             text="Buscar outro endereço"
             marginTop="m"
           />
-        </ScrollView>
-      ) : (
-        <ScrollView
-          keyboardShouldPersistTaps="handled"
-          style={{width: "100%", flex: 1, height: 300}}
-          contentContainerStyle={{alignItems: "center"}}>
-          <LocationInput
-            fetchAddress={fetchAddressCords}
-            placeholder="Onde você está?"
-          />
-          <Box mb="m" />
-          <LocationInput
-            fetchAddress={fetchDestinationCords}
-            placeholder="Para onde você quer ir?"
-          />
-          <MainButton
-            action={() => onDone()}
-            bg="btn_dark"
-            color="text_light"
-            text="Próximo"
-            marginTop="exaggerated"
-          />
-        </ScrollView>
+        </Box>
       )}
+      {
+        useCurrentAddress ? (
+          <ScrollView
+            keyboardShouldPersistTaps="handled"
+            style={{ width: "100%", flex: 1, height: 300 }}
+            contentContainerStyle={{ alignItems: "center" }}>
+            <Box mb="m" />
+            <LocationInput
+              fetchAddress={fetchDestinationCords}
+              placeholder="Para onde você quer ir?"
+            />
+            <MainButton
+              action={onDone}
+              bg="btn_dark"
+              color="text_light"
+              text="Próximo"
+              marginTop="m"
+            />
+          </ScrollView>
+        )
+          :
+          (
+            <ScrollView
+              keyboardShouldPersistTaps="handled"
+              style={{ width: "100%", flex: 1, height: 300 }}
+              contentContainerStyle={{ alignItems: "center" }}>
+              <LocationInput
+                fetchAddress={fetchAddressCords}
+                placeholder="Onde você está?"
+              />
+              <Box mb="m" />
+              <LocationInput
+                fetchAddress={fetchDestinationCords}
+                placeholder="Para onde você quer ir?"
+              />
+              <MainButton
+                action={() => onDone()}
+                bg="btn_dark"
+                color="text_light"
+                text="Próximo"
+                marginTop="exaggerated"
+              />
+            </ScrollView>
+          )
+      }
     </Box>
   );
 }
-
-// Enviar dados do formulário de location, para a página final de confirmar corrida

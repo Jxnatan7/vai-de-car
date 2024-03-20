@@ -1,10 +1,26 @@
-import {MainButton} from "../../components/MainButton";
+import React from "react";
 
-import {faArrowRight} from "@fortawesome/free-solid-svg-icons";
-import {TouchableOpacity} from "react-native";
-import {Box, Text} from "../../theme";
+import { MainButton } from "../../components/MainButton";
 
-export default function Entry({navigation}: {navigation: any}) {
+import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
+import { TouchableOpacity } from "react-native";
+import { Box, Text } from "../../theme";
+import { storage } from "../../config/storage";
+import { useNavigation } from "@react-navigation/native";
+
+export default function Entry() {
+  const navigation = useNavigation();
+
+  const userIsAuthenticated = () => {
+    if (storage.getString("user.token") === undefined) {
+      //@ts-ignore
+      navigation.navigate("login");
+      return;
+    }
+    //@ts-ignore
+    navigation.navigate("user-home");
+  };
+
   return (
     <Box
       flex={1}
@@ -26,7 +42,7 @@ export default function Entry({navigation}: {navigation: any}) {
           alignItems="center"
           gap="s">
           <MainButton
-            action={() => navigation.navigate("login")}
+            action={userIsAuthenticated}
             icon={faArrowRight}
             bg="btn_dark"
             color="text_light"
@@ -40,7 +56,7 @@ export default function Entry({navigation}: {navigation: any}) {
               activeOpacity={0.8}
               onPress={() => navigation.navigate("user-signup")}>
               <Text
-                style={{textDecorationLine: "underline", fontWeight: "bold"}}>
+                style={{ textDecorationLine: "underline", fontWeight: "bold" }}>
                 crie uma agora
               </Text>
             </TouchableOpacity>

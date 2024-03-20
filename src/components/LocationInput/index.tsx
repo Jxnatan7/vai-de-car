@@ -1,15 +1,15 @@
 import React from "react";
-import {useTheme} from "@shopify/restyle";
-import {ThemeProps} from "../../theme";
+import { useTheme } from "@shopify/restyle";
+import { ThemeProps } from "../../theme";
 import {
   GooglePlacesAutocomplete,
   GooglePlaceData,
   GooglePlaceDetail,
 } from "react-native-google-places-autocomplete";
-import {google_api_key} from "../../config/index.json";
-import {LocationInputProps} from "../../@types/LocationInputProps";
+import { google_api_key } from "../../config/index.json";
+import { LocationInputProps } from "../../@types/LocationInputProps";
 
-export function LocationInput({placeholder, fetchAddress}: LocationInputProps) {
+export function LocationInput({ placeholder, fetchAddress }: LocationInputProps) {
   const theme = useTheme<ThemeProps>();
   const onPressAddress = (
     data: GooglePlaceData | null,
@@ -31,7 +31,7 @@ export function LocationInput({placeholder, fetchAddress}: LocationInputProps) {
       }}
       styles={{
         container: {
-          width: "100%",
+          width: 340,
         },
         textInputContainer: {
           backgroundColor: theme.colors.light_gray,

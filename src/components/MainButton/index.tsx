@@ -11,6 +11,8 @@ export function MainButton({
   icon,
   action,
   marginTop,
+  borderRadius,
+  borderDefault
 }: MainButtonProps) {
   return (
     <TouchableOpacity activeOpacity={0.8} onPress={action}>
@@ -22,8 +24,10 @@ export function MainButton({
         justifyContent="center"
         alignItems="center"
         alignSelf="center"
-        borderRadius={100}
-        marginTop={marginTop}>
+        borderRadius={borderRadius ?? 100}
+        marginTop={marginTop}
+        borderWidth={borderDefault ? 1 : 0}
+      >
         <Box>
           <Text variant="button" color={color}>
             {text}

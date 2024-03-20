@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { MapContainer } from "../MapContainer";
-import { LayoutPropsProps } from "../../@types/LayoutProps";
+import { LayoutProps } from "../../@types/LayoutProps";
 import BoxContainer from "../BoxContainer";
 
 export function Layout({
@@ -9,14 +9,16 @@ export function Layout({
   headerTitle,
   backButton,
   isMap,
-  aboutUser
-}: LayoutPropsProps) {
+  aboutUser,
+  brand
+}: LayoutProps) {
+
   return (
     <SafeAreaView>
       {isMap ? (
         <MapContainer backButton={backButton}>{children}</MapContainer>
       ) : (
-        <BoxContainer headerTitle={headerTitle} backButton={backButton} aboutUser={aboutUser}>
+        <BoxContainer aboutUser={aboutUser} backButton={backButton} headerTitle={headerTitle} brand={brand}>
           {children}
         </BoxContainer>
       )}

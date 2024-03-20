@@ -17,8 +17,10 @@ import {
   UserRegisterRequest,
 } from "../../../../@types/requests/DriverRegisterRequest";
 import { driverRegister } from "../../../../services/auth/driverRegister";
+import { useNavigation } from "@react-navigation/native";
 
-export default function Register({ navigation, route }: RegisterAutomobileProps) {
+export default function Register({ route }: RegisterAutomobileProps) {
+  const navigation = useNavigation();
   const formData: RegisterDriveRequest = route.params?.data;
 
   const userRequest: UserRegisterRequest = {

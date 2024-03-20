@@ -5,9 +5,10 @@ import { Header } from "../Header";
 
 export default function BoxContainer({
   children,
-  headerTitle,
+  aboutUser,
   backButton,
-  aboutUser
+  headerTitle,
+  brand
 }: BoxContainerProps) {
   return (
     <Box
@@ -16,7 +17,7 @@ export default function BoxContainer({
       height="100%"
       p="l"
       alignItems="center">
-      <Header title={headerTitle} backButton={backButton} aboutUser={aboutUser} />
+      <Header aboutUser={aboutUser} backButton={backButton} title={headerTitle} brand={brand} />
       {children}
     </Box>
   );
