@@ -2,5 +2,6 @@ import { ReactElement } from "react";
 
 export type MapContainerProps = {
   backButton?: boolean,
-  children: ReactElement;
+  children: ReactElement,
+  dontUseGeoLocation?: boolean
 };

@@ -6,5 +6,6 @@ export type LayoutProps = {
   backButton?: boolean,
   isMap?: boolean,
   aboutUser?: boolean,
-  brand?: boolean
+  brand?: boolean,
+  dontUseGeoLocation?: boolean
 };

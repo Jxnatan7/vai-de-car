@@ -10,13 +10,14 @@ export function Layout({
   backButton,
   isMap,
   aboutUser,
-  brand
+  brand,
+  dontUseGeoLocation
 }: LayoutProps) {
 
   return (
     <SafeAreaView>
       {isMap ? (
-        <MapContainer backButton={backButton}>{children}</MapContainer>
+        <MapContainer backButton={backButton} dontUseGeoLocation={dontUseGeoLocation}>{children}</MapContainer>
       ) : (
         <BoxContainer aboutUser={aboutUser} backButton={backButton} headerTitle={headerTitle} brand={brand}>
           {children}

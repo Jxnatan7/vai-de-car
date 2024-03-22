@@ -1,22 +1,20 @@
-import React, {useState} from "react";
-import {Layout} from "../../../../../components/Layout";
-import {Box, Text} from "../../../../../theme";
-import {TextInfo} from "../../../../../components/TextInfo";
+import React, { useState } from "react";
+import { Layout } from "../../../../../components/Layout";
+import { Box, Text } from "../../../../../theme";
+import { TextInfo } from "../../../../../components/TextInfo";
 import {
   faCar,
   faLocationArrow,
   faLocationDot,
 } from "@fortawesome/free-solid-svg-icons";
-import {InputRadio} from "../../../../../components/InputRadio";
-import {MainButton} from "../../../../../components/MainButton";
-import {useNavigation} from "@react-navigation/native";
-import {useForm} from "react-hook-form";
-import api, {configureAxios} from "../../../../../config/axiosConfig";
-import {storage} from "../../../../../config/storage";
-
-const InfoTitle = ({text}: {text: string}) => {
-  return <Text color="very_dark_gray">{text}</Text>;
-};
+import { InputRadio } from "../../../../../components/InputRadio";
+import { MainButton } from "../../../../../components/MainButton";
+import { useNavigation } from "@react-navigation/native";
+import { useForm } from "react-hook-form";
+import api, { configureAxios } from "../../../../../config/axiosConfig";
+import { storage } from "../../../../../config/storage";
+import { InfoTitle } from "../../../../../components/InfoTitle";
+import { HttpStatusCode } from "axios";
 
 type FormData = {
   latitudeFrom: number;
@@ -26,9 +24,7 @@ type FormData = {
   price: number;
 };
 
-configureAxios(storage.getString("user.token"));
-
-export default function ConfirmTrip({route}) {
+export default function ConfirmTrip({ route }: { route: any }) {
   const navigation = useNavigation();
   const [selectedOption, setSelectedOption] = useState<string | null>(
     "TRIP_CAR",
@@ -50,10 +46,8 @@ export default function ConfirmTrip({route}) {
   };
 
   const {
-    register,
-    setValue,
     handleSubmit,
-    formState: {errors},
+    formState: { errors },
   } = useForm<FormData>({
     defaultValues: {
       latitudeFrom: pickupLocation.latitude,
@@ -65,10 +59,15 @@ export default function ConfirmTrip({route}) {
   });
 
   const onSubmit = (data: FormData) => {
-    api
-      .post("/trip", data)
+    configureAxios(`${storage.getString("user.token")}`);
+    api.post("/trip", data)
       .then(function (response) {
-        console.log(response);
+        if (response.status === HttpStatusCode.Created) {
+          console.log(response.data);
+          storage.set("trip.id", response.data);
+          // @ts-ignore
+          navigation.navigate("trip");
+        }
       })
       .catch(function (error) {
         console.log(error);

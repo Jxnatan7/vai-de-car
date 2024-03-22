@@ -1,22 +1,20 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Box } from "../../theme";
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import { BottomSheet } from "../BottomSheet";
 import { BackButton } from "../BackButton";
 import { MapContainerProps } from "../../@types/MapContainerProps";
-import Geolocation, {
-  GeolocationResponse,
-} from "@react-native-community/geolocation";
 import { fetchLocationDataProps } from "../../@types/NewTripFormProps";
 import { google_api_key } from "../../config/index.json";
 import MapViewDirections from "react-native-maps-directions";
 import { useLocation } from "../../context/LocationContext";
+import { TextInfo } from "../TextInfo";
 
 export function MapContainer({ children, backButton }: MapContainerProps) {
   const location = useLocation();
 
   if (!location) {
-    return <p>Obtendo localização...</p>;
+    return <TextInfo text="Obtendo localização..." />;
   }
 
   const [state, setState] = useState({
@@ -54,6 +52,8 @@ export function MapContainer({ children, backButton }: MapContainerProps) {
     });
   };
 
+  console.log(state);
+
   return (
     <Box
       width="100%"
@@ -68,15 +68,19 @@ export function MapContainer({ children, backButton }: MapContainerProps) {
         left={0}
         zIndex={9999}
         p="s">
-        <Box
-          width="100%"
-          height="100%"
-          bg="bg_light"
-          borderRadius={50}
-          justifyContent="center"
-          alignItems="center">
-          {backButton && (<BackButton />)}
-        </Box>
+        {
+          backButton && (
+            <Box
+              width="100%"
+              height="100%"
+              bg="bg_light"
+              borderRadius={50}
+              justifyContent="center"
+              alignItems="center">
+              <BackButton />
+            </Box>
+          )
+        }
       </Box>
       {location && (
         <MapView

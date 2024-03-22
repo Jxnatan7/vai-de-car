@@ -8,9 +8,9 @@ export const login = (data: LoginRequest, navigation: NavigationProp<any>) => {
     .post("/auth/login", data)
     .then(function (response) {
       const data = response.data;
-      storage.set("user.token", data?.token);
-      storage.set("user.name", data?.name);
-      storage.set("user.driver", data?.driver);
+      storage.set("user.token", data.token);
+      storage.set("user.name", data.name);
+      storage.set("user.driver", data.driver);
 
       if (data?.driver === true) {
         //@ts-ignore

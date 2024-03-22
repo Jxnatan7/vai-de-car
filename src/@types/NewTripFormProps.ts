@@ -1,12 +1,11 @@
+type CoordinatesProps = {
+  latitude: number;
+  longitude: number;
+}
+
 export type fetchLocationDataProps = {
-  pickupCords: {
-    latitude: number;
-    longitude: number;
-  };
-  destinationCords: {
-    latitude: number;
-    longitude: number;
-  };
+  pickupCords: CoordinatesProps,
+  destinationCords: CoordinatesProps,
 };
 
 export type NewTripFormProps = {

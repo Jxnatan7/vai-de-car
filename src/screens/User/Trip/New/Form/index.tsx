@@ -1,21 +1,21 @@
 import React from "react";
 import { useState } from "react";
-import { Box, theme } from "../../../../../theme";
+import { Box } from "../../../../../theme";
 import { LocationInput } from "../../../../../components/LocationInput";
 import { MainButton } from "../../../../../components/MainButton";
 import { NewTripFormProps } from "../../../../../@types/NewTripFormProps";
 import { useNavigation } from "@react-navigation/native";
 import { useLocation } from "../../../../../context/LocationContext";
 import { ScrollView } from 'react-native-virtualized-view';
-import { TextInput } from "react-native";
 import { fetchGoogleMapsData } from "../../../../../services/FetchGoogleMapsAPI";
+import { TextInfo } from "../../../../../components/TextInfo";
 
 export function NewTripForm({ fetchLocationData, scrollDown }: NewTripFormProps) {
   const navigation = useNavigation();
   const location = useLocation();
 
-  if (!location) {
-    return <p>Obtendo localização...</p>;
+  if (location === null) {
+    return <TextInfo text="Obtendo localização..." />;
   }
 
   const [useCurrentAddress, setUseCurrentAddress] = useState<boolean | null>(null);
