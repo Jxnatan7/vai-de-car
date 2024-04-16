@@ -12,10 +12,11 @@ export function MainButton({
   action,
   marginTop,
   borderRadius,
-  borderDefault
+  borderDefault,
+  disabled
 }: MainButtonProps) {
   return (
-    <TouchableOpacity activeOpacity={0.8} onPress={action}>
+    <TouchableOpacity activeOpacity={0.8} onPress={action} disabled={disabled}>
       <Box
         bg={bg}
         width={340}

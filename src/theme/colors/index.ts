@@ -9,12 +9,12 @@ export const colors = {
   text_orange: "#FF8A00",
   text_blue: "#217AFF",
   text_gray: "#BDBDBD",
-  text_success: "#007026",
+  text_success: "#5BB450",
 
   // Buttons
   btn_dark: "#000",
   btn_danger: "#FF4545",
-  btn_success: "#007026",
+  btn_success: "#5BB450",
   btn_orange: "#FF8A00",
   btn_blue: "#217AFF",
 

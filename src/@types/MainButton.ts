@@ -13,4 +13,5 @@ export type MainButtonProps = {
   marginTop?: ThemeSpacing,
   borderRadius?: number,
   borderDefault?: boolean,
+  disabled?: boolean | undefined,
 };
